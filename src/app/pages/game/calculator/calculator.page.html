@@ -1,0 +1,160 @@
+<ion-header>
+  <ion-toolbar class="flex flex-row justify-center items-center">
+    <ion-label slot="start" class="pl-4"></ion-label>
+    <ion-segment
+      *ngIf="games.size == 2"
+      (ionChange)="changeSelectedPlayer($event)"
+    >
+      <ion-segment-button *ngFor="let id of games.keys()" [value]="id">
+        <ion-label
+          >{{ games.get(id)?.profile?.nick_name ||
+          (games.get(id)?.profile?.first_name + ' ' +
+          games.get(id)?.profile?.last_name) }}</ion-label
+        >
+      </ion-segment-button>
+    </ion-segment>
+
+    <ion-label slot="end" class="pr-4">501</ion-label>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="flex flex-row items-center justify-center">
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      <ion-col>
+        <h4 class="text-heading-5">Checkout with</h4>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-list inset="true">
+          <ion-item
+            *ngFor="let score of games.get(this.selectedPlayer)?.scores"
+          >
+            <p slot="start" class="mr-2">
+              {{
+              this.utilService.getScoreIcon(this.games.get(this.selectedPlayer)?.scores
+              || [], score) }}
+            </p>
+
+            <ion-label>T20 - T20 - T20</ion-label>
+            <p slot="end">60</p>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer class="hidden">
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col
+          class="ion-text-center flex flex-row justify-center gap-2 items-center"
+        >
+          <h1
+            class="p-3 border border-[var(--ion-color-light)] rounded-sm text-body-lg"
+            *ngFor="let score of this.currentScore.game_darts"
+          >
+            {{ this.formatNumber(score.value, score.multiplier).replace('-1',
+            '-')}}
+          </h1>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div class="flex flex-row">
+            <ion-button
+              *ngFor="let number of [1, 2, 3, 4, 5,6 ,7]"
+              expand="full"
+              class="w-full"
+              color="light"
+              (click)="addScore(number)"
+            >
+              {{number}}
+            </ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div class="flex flex-row">
+            <ion-button
+              *ngFor="let number of [8, 9, 10, 11, 12, 13, 14]"
+              expand="full"
+              class="w-full"
+              color="light"
+              (click)="addScore(number)"
+            >
+              {{number}}
+            </ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div class="flex flex-row">
+            <ion-button
+              *ngFor="let number of [15, 16, 17, 18, 19, 20, 25]"
+              expand="full"
+              class="w-full"
+              color="light"
+              (click)="addScore(number)"
+              [disabled]="number == 25 && activeMultiplier == 3"
+            >
+              {{number}}
+            </ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div class="flex flex-row gap-3">
+            <ion-button
+              expand="full"
+              class="w-1/2"
+              color="light"
+              (click)="addScore(0)"
+            >
+              0
+            </ion-button>
+            <ion-button
+              expand="full"
+              class="w-full"
+              [color]="activeMultiplier == 2 ? 'success ': 'secondary'"
+              fill="solid"
+              (click)="setMultiplier(2)"
+            >
+              Double
+            </ion-button>
+            <ion-button
+              expand="full"
+              class="w-full"
+              [color]="activeMultiplier == 3 ? 'success ': 'primary'"
+              fill="solid"
+              (click)="setMultiplier(3)"
+            >
+              Triple
+            </ion-button>
+            <ion-button
+              expand="full"
+              class="w-1/2"
+              color="danger"
+              (click)="undoScore()"
+            >
+              ↩️
+            </ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button (click)="score()" expand="block" color="primary">
+            Score
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

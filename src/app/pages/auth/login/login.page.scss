@@ -1,0 +1,18 @@
+ion-item {
+    --border-color: var(--ion-color-light);
+    --border-radius: 10px;
+    --border-style: solid;
+    --border-width: 1px;
+}
+
+ion-item.ion-invalid.ion-touched {
+    --border-color: var(--ion-color-danger) !important;
+}
+
+ion-item.item-has-focus {
+    --border-color: var(--ion-color-primary) !important;
+}
+
+ion-item.ion-valid {
+    --border-color: var(--ion-color-success) !important;
+}

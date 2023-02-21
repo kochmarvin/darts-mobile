@@ -1,0 +1,166 @@
+<ion-content>
+  <div class="h-full flex items-center justify-center">
+    <ion-grid>
+      <ion-row class="ion-margin-top">
+        <ion-col
+          offset-lg="6"
+          size-lg="4"
+          offset-md="3"
+          size-md="6"
+          offset-sm="2"
+          size-sm="8"
+          offset-xs="0.5"
+          size-xs="11"
+        >
+          <p class="text-body-lg">Welcome to</p>
+          <h3 class="text-heading-3 font-semibold">Darts.works</h3>
+        </ion-col>
+      </ion-row>
+      <form [formGroup]="loginForm" (ngSubmit)="login($event)">
+        <ion-row class="mt-9">
+          <ion-col
+            offset-lg="6"
+            size-lg="4"
+            offset-md="3"
+            size-md="6"
+            offset-sm="2"
+            size-sm="8"
+            offset-xs="0.5"
+            size-xs="11"
+          >
+            <ion-text class="text-body" color="danger" *ngIf="errorMessage"
+              >{{errorMessage}}</ion-text
+            >
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col
+            offset-lg="6"
+            size-lg="4"
+            offset-md="3"
+            size-md="6"
+            offset-sm="2"
+            size-sm="8"
+            offset-xs="0.5"
+            size-xs="11"
+          >
+            <ion-item lines="none">
+              <ion-icon name="mail" slot="start"></ion-icon>
+              <ion-input
+                type="email"
+                formControlName="email"
+                placeholder="your@email.com"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col
+            offset-lg="6"
+            size-lg="4"
+            offset-md="3"
+            size-md="6"
+            offset-sm="2"
+            size-sm="8"
+            offset-xs="0.5"
+            size-xs="11"
+          >
+            <ion-item lines="none"
+              ><ion-icon name="lock-closed" slot="start"></ion-icon>
+              <ion-input
+                type="Password"
+                formControlName="password"
+                placeholder="your password"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-margin-bottom">
+          <ion-col
+            offset-lg="6"
+            size-lg="4"
+            offset-md="3"
+            size-md="6"
+            offset-sm="2"
+            size-sm="8"
+            offset-xs="0.5"
+            size-xs="11"
+          >
+            <a
+              class="ion-float-right text-body-sm"
+              fill="clear"
+              size="small"
+              href="https://darts.works/forgot-password"
+              >Forgot your password?</a
+            >
+          </ion-col>
+        </ion-row>
+        <ion-row class="mt-9">
+          <ion-col
+            offset-lg="6"
+            size-lg="4"
+            offset-md="3"
+            size-md="6"
+            offset-sm="2"
+            size-sm="8"
+            offset-xs="0.5"
+            size-xs="11"
+            class="ion-no-margin"
+          >
+            <ion-button
+              expand="block"
+              fill="solid"
+              [disabled]="!loginForm.valid"
+              type="submit"
+              ><ion-icon
+                name="log-in"
+                slot="start"
+                *ngIf="!logginIn"
+              ></ion-icon>
+              <ion-spinner name="crescent" *ngIf="logginIn"></ion-spinner>
+              <span *ngIf="!logginIn"> Sign in </span>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </form>
+      <ion-row>
+        <ion-col
+          offset-lg="6"
+          size-lg="4"
+          offset-md="3"
+          size-md="6"
+          offset-sm="2"
+          size-sm="8"
+          offset-xs="0.5"
+          size-xs="11"
+          class="ion-no-margin"
+        >
+          <ion-button expand="block" fill="outline" color="dark"
+            ><ion-icon name="logo-google" slot="start"></ion-icon>Sign in via
+            Google</ion-button
+          >
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-no-margin">
+        <ion-col
+          offset-lg="6"
+          size-lg="4"
+          offset-md="3"
+          size-md="6"
+          offset-sm="2"
+          size-sm="8"
+          offset-xs="0.5"
+          size-xs="11"
+        >
+          <a
+            class="ion-float-right text-body-sm"
+            fill="clear"
+            size="small"
+            href="https://darts.works/register"
+            >Don't have an account?</a
+          >
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
