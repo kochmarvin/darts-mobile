@@ -30,9 +30,8 @@ export class LoginPage implements OnInit {
     this.routerOutlet.swipeGesture = false;
   }
 
-  async ngOnInit() {
-    const session = await this.supabaseService.session();
-    if (session != null) {
+  ngOnInit() {
+    if (this.supabaseService.session != null) {
       this.router.navigateByUrl('/dashboard');
     }
   }
@@ -48,6 +47,8 @@ export class LoginPage implements OnInit {
 
     if (!error) {
       this.router.navigateByUrl('/dashboard');
+      this.supabaseService.setSession();
+      this.supabaseService.setUser();
     }
 
     this.errorMessage = `Error: ${error?.message}`;

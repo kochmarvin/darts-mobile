@@ -20,7 +20,8 @@ const routes: Routes = [
   },
   {
     path: 'calculator/:id',
-    loadChildren: () => import('./pages/game/calculator/calculator.module').then( m => m.CalculatorPageModule)
+    loadChildren: () => import('./pages/game/calculator/calculator.module').then( m => m.CalculatorPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'dashboard',

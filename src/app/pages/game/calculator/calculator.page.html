@@ -1,11 +1,14 @@
 <ion-header>
   <ion-toolbar class="flex flex-row justify-center items-center">
-    <ion-label slot="start" class="pl-4"></ion-label>
+    <ion-label slot="start" class="pl-4"
+      >{{ games.get(supabaseService.user!.id)?.points }}</ion-label
+    >
     <ion-segment
       *ngIf="games.size == 2"
       (ionChange)="changeSelectedPlayer($event)"
+      [value]="selectedPlayer"
     >
-      <ion-segment-button *ngFor="let id of games.keys()" [value]="id">
+      <ion-segment-button *ngFor="let id of playerIds" [value]="id">
         <ion-label
           >{{ games.get(id)?.profile?.nick_name ||
           (games.get(id)?.profile?.first_name + ' ' +
@@ -14,31 +17,116 @@
       </ion-segment-button>
     </ion-segment>
 
-    <ion-label slot="end" class="pr-4">501</ion-label>
+    <!-- <ion-label slot="end" class="pr-4"></ion-label> -->
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="flex flex-row items-center justify-center">
-  <ion-grid class="ion-no-padding">
+<ion-content *ngIf="!loaded">
+  <div class="w-full h-full flex flex-col items-center justify-center">
+    <div
+      class="bg-[var(--ion-color-light)] flex flex-col items-center justify-center p-6 gap-3 rounded-md"
+    >
+      <h1 class="text-body-lg text-[var(--ion-color-dark)]">Loading data</h1>
+      <ion-spinner name="crescent" color="dark"></ion-spinner>
+    </div>
+  </div>
+</ion-content>
+
+<ion-content
+  class="flex flex-row items-center justify-center"
+  *ngIf="loaded && !startingPlayer"
+>
+  <div class="w-full h-full flex flex-col items-center justify-center">
+    <div
+      class="bg-[var(--ion-color-light)] flex flex-col items-center justify-center p-6 gap-3 rounded-md"
+      *ngIf="games.size != 2"
+    >
+      <h1 class="text-body-lg text-[var(--ion-color-dark)]">
+        Waiting for oponent
+      </h1>
+      <ion-spinner name="crescent" color="dark"></ion-spinner>
+    </div>
+
+    <div
+      class="flex flex-col justify-center items-center gap-y-4"
+      *ngIf="games.size == 2 && !startingPlayer"
+    >
+      <img
+        [src]="games.get(playerIds[0])?.profile?.profile_picture"
+        width="128"
+        class="rounded-full"
+        *ngIf="loaded"
+      />
+      <ion-skeleton-text
+        [animated]="true"
+        *ngIf="!loaded"
+        class="w-32 h-32 rounded-full"
+      ></ion-skeleton-text>
+      <ion-icon
+        name="arrow-up-outline"
+        size="large"
+        class="transition duration-[3s]"
+        [class.rotate-tails]="flip == 0"
+        [class.rotate-heads]="flip == 1"
+      ></ion-icon>
+      <ion-skeleton-text
+        [animated]="true"
+        *ngIf="!loaded"
+        class="w-32 h-32 rounded-full"
+      ></ion-skeleton-text>
+      <img
+        [src]="games.get(playerIds[1])?.profile?.profile_picture"
+        width="128"
+        class="rounded-full"
+        *ngIf="loaded"
+        (click)="flip = 1"
+      />
+    </div>
+  </div>
+</ion-content>
+
+<ion-content *ngIf="loaded && startingPlayer">
+  <ion-grid>
     <ion-row>
       <ion-col>
-        <h4 class="text-heading-5">Checkout with</h4>
+        <ion-item
+          lines="none"
+          class="border-l-2 rounded-md"
+          [class.border-danger]="selectedPlayer != currentPlayer"
+          [class.border-success]="selectedPlayer == currentPlayer"
+        >
+          <ion-label>
+            <h1 class="font-bold">{{ games.get(selectedPlayer)?.points }}</h1>
+            <p class="text-danger">
+              {{ utilService.getCheckout(games.get(selectedPlayer)!.points) }}
+            </p>
+          </ion-label>
+          <ion-avatar slot="end">
+            <img
+              alt="player image"
+              [src]="games.get(selectedPlayer)?.profile?.profile_picture"
+            />
+          </ion-avatar>
+        </ion-item>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-list inset="true">
+        <ion-list class="rounded-md">
           <ion-item
             *ngFor="let score of games.get(this.selectedPlayer)?.scores"
           >
             <p slot="start" class="mr-2">
               {{
-              this.utilService.getScoreIcon(this.games.get(this.selectedPlayer)?.scores
-              || [], score) }}
+              this.utilService.getScoreIcon(this.games.get(this.selectedPlayer)!.points,
+              this.games.get(this.selectedPlayer)?.scores || [], score) }}
             </p>
 
-            <ion-label>T20 - T20 - T20</ion-label>
-            <p slot="end">60</p>
+            <ion-label
+              >{{ utilService.getFormattedScoreString(score.game_darts)
+              }}</ion-label
+            >
+            <p slot="end">{{ utilService.getSumOfScore(score) }}</p>
           </ion-item>
         </ion-list>
       </ion-col>
@@ -46,7 +134,11 @@
   </ion-grid>
 </ion-content>
 
-<ion-footer class="hidden">
+<ion-footer
+  class="transition duration-500"
+  [ngClass]="closed ? 'translate-y-full' : 'translate-y-0'"
+  [class.hidden]="startingPlayer === undefined || !loaded || closed"
+>
   <ion-toolbar>
     <ion-grid>
       <ion-row>
@@ -57,8 +149,8 @@
             class="p-3 border border-[var(--ion-color-light)] rounded-sm text-body-lg"
             *ngFor="let score of this.currentScore.game_darts"
           >
-            {{ this.formatNumber(score.value, score.multiplier).replace('-1',
-            '-')}}
+            {{ this.utilService.formatNumber(score.value,
+            score.multiplier).replace('-1', '-')}}
           </h1>
         </ion-col>
       </ion-row>

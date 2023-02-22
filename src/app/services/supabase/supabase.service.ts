@@ -17,7 +17,9 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class SupabaseService {
-  private supabase: SupabaseClient;
+  public supabase: SupabaseClient;
+  public session: Session | null = null;
+  public user: User | null = null;
 
   constructor(
     private loadingCtrl: LoadingController,
@@ -29,16 +31,20 @@ export class SupabaseService {
     );
   }
 
-  public getSupabase() {
-    return this.supabase;
+  public async setSession(): Promise<void> {
+    if (!this.supabase) {
+      return;
+    }
+
+    this.session = (await this.supabase.auth.getSession()).data.session;
   }
 
-  public async getUser(): Promise<User | null> {
-    return (await this.supabase.auth.getUser()).data.user;
-  }
+  public async setUser(): Promise<void> {
+    if (!this.supabase) {
+      return;
+    }
 
-  public async session(): Promise<Session | null> {
-    return (await this.supabase.auth.getSession()).data.session;
+    this.user = (await this.supabase.auth.getUser()).data.user;
   }
 
   public signIn(email: string, password: string): Promise<AuthResponse> {

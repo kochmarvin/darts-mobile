@@ -22,7 +22,12 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const session = await this.subapaseService.session();
+    await this.subapaseService.setSession();
+    await this.subapaseService.setUser();
+
+    const session = (await this.subapaseService.supabase.auth.getSession()).data
+      .session;
+
     if (session == null) this.router.navigateByUrl('/');
     return session != null;
   }

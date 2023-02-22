@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { checkoutTable } from 'src/app/pages/game/checkout.table';
 import { Score } from 'src/app/types/game.types';
 import { Database } from 'src/app/types/Schema';
 
@@ -8,13 +9,30 @@ import { Database } from 'src/app/types/Schema';
 export class UtilService {
   constructor() {}
 
+  public formatNumber(amount: number, multiplier: number): string {
+    if (amount == 25 && multiplier == 2) return 'Bull';
+    return (
+      multiplier
+        .toString()
+        .replace('1', '')
+        .replace('2', 'D')
+        .replace('3', 'T') + amount
+    );
+  }
+
+  public getCheckout(points: number) {
+    if (checkoutTable[points]) {
+      return this.getFormattedScoreString(checkoutTable[points]);
+    }
+    return '';
+  }
+
   public getSumOfScore(score: Score) {
     let sum = 0;
 
     score?.game_darts?.forEach(
       (element: Database['public']['Tables']['game_darts']['Row']) => {
         if (element.value == -1) return;
-        console.log(element.value);
         sum += element.value * element.multiplier;
       }
     );
@@ -41,15 +59,32 @@ export class UtilService {
     return sum;
   }
 
-  public getScoreIcon(scores: Score[], score: Score) {
+  public getFormattedScoreString(
+    darts: Database['public']['Tables']['game_darts']['Row'][]
+  ): string {
+    let text = '';
+
+    for (let i = 0; i < darts.length - 1; i++) {
+      text += this.formatNumber(darts[i].value, darts[i].multiplier) + ' - ';
+    }
+
+    text += this.formatNumber(
+      darts[darts.length - 1].value,
+      darts[darts.length - 1].multiplier
+    );
+
+    return text;
+  }
+
+  public getScoreIcon(points: number, scores: Score[], score: Score) {
     if (score.invalid) {
       return '❌';
     }
 
-    const latestScore: Score | undefined = scores[0];
+    const latestScore: Score | null = scores[0];
     const scoreLength: number = scores.length;
 
-    if (scores && scoreLength > 0 && score === latestScore) {
+    if (scores && scoreLength > 0 && points == 0 && score === latestScore) {
       return '✅';
     }
 
