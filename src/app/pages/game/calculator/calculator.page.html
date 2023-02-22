@@ -90,8 +90,7 @@
     <ion-row>
       <ion-col>
         <ion-item
-          lines="none"
-          class="border-l-2 rounded-md"
+          class="border-l-2 border-t border-b border-r border-b-slate-200 border-t-slate-200 border-r-slate-200 shadow rounded-md"
           [class.border-danger]="selectedPlayer != currentPlayer"
           [class.border-success]="selectedPlayer == currentPlayer"
         >
@@ -112,9 +111,10 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-list class="rounded-md">
+        <ion-list class="border border-slate-200 shadow rounded-md">
           <ion-item
             *ngFor="let score of games.get(this.selectedPlayer)?.scores"
+            lines="full"
           >
             <p slot="start" class="mr-2">
               {{
@@ -146,7 +146,7 @@
           class="ion-text-center flex flex-row justify-center gap-2 items-center"
         >
           <h1
-            class="p-3 border border-[var(--ion-color-light)] rounded-sm text-body-lg"
+            class="p-3 border border-slate-200 rounded-sm text-body-lg"
             *ngFor="let score of this.currentScore.game_darts"
           >
             {{ this.utilService.formatNumber(score.value,
@@ -160,7 +160,7 @@
             <ion-button
               *ngFor="let number of [1, 2, 3, 4, 5,6 ,7]"
               expand="full"
-              class="w-full"
+              class="w-full border border-slate-200"
               color="light"
               (click)="addScore(number)"
             >
@@ -175,7 +175,7 @@
             <ion-button
               *ngFor="let number of [8, 9, 10, 11, 12, 13, 14]"
               expand="full"
-              class="w-full"
+              class="w-full border border-slate-200"
               color="light"
               (click)="addScore(number)"
             >
@@ -190,7 +190,7 @@
             <ion-button
               *ngFor="let number of [15, 16, 17, 18, 19, 20, 25]"
               expand="full"
-              class="w-full"
+              class="w-full border border-slate-200"
               color="light"
               (click)="addScore(number)"
               [disabled]="number == 25 && activeMultiplier == 3"
@@ -205,7 +205,7 @@
           <div class="flex flex-row gap-3">
             <ion-button
               expand="full"
-              class="w-1/2"
+              class="w-1/2 border border-slate-200"
               color="light"
               (click)="addScore(0)"
             >

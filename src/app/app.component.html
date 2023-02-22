@@ -15,13 +15,29 @@
               [routerLink]="[p.url]"
               lines="none"
               detail="false"
-              [ngClass]="this.router.url === p.url ? 'border-l border-primary' : ''"
+              [ngClass]="
+                this.router.url === p.url ? 'border-l border-primary' : ''
+              "
               routerLinkActive="selected"
             >
               <ion-icon slot="start" [name]="p.icon"></ion-icon>
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
+          <ion-accordion-group>
+            <ion-accordion value="first">
+              <ion-item slot="header">
+                <ion-icon name="game-controller" slot="start"></ion-icon>
+                <ion-label>Game</ion-label>
+              </ion-item>
+              <ion-item slot="content" class="bg-[#000]!">
+                <ion-icon slot="start"></ion-icon>
+                <ion-label>Create a game</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">Create a game</div>
+              <div class="ion-padding" slot="content">Join a game</div>
+            </ion-accordion>
+          </ion-accordion-group>
           <ion-menu-toggle>
             <ion-item lines="none" (click)="logOut()">
               <ion-icon slot="start" name="log-out"></ion-icon>

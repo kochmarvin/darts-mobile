@@ -1,0 +1,184 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button color="dark"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Game</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-card class="ion-no-margin ion-margin-start ion-margin-end">
+          <ion-card-header>
+            <ion-card-subtitle class="flex items-center"
+              >Game type
+              <span class="flex flex-1 items-center justify-end text-body">
+                🎯
+              </span>
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content class="flex flex-row gap-x-2">
+            <ion-button
+              [color]="game.type == 'Online' ? 'primary' : 'dark'"
+              [fill]="game.type == 'Online' ? 'solid' : 'outline'"
+              expand="block"
+              class="basis-1/3"
+              (click)="game.type = 'Online'"
+              >Online</ion-button
+            >
+            <ion-button
+              [color]="game.type == 'Local' ? 'primary' : 'dark'"
+              [fill]="game.type == 'Local' ? 'solid' : 'outline'"
+              expand="block"
+              class="basis-1/3"
+              disabled
+              (click)="game.type = 'Local'"
+              >Local</ion-button
+            >
+            <ion-button
+              [color]="game.type == 'Guest' ? 'primary' : 'dark'"
+              [fill]="game.type == 'Guest' ? 'solid' : 'outline'"
+              expand="block"
+              class="basis-1/3"
+              disabled
+              (click)="game.type = 'Guest'"
+              >Guest</ion-button
+            >
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-icon name="arrow-down"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-card class="ion-no-margin ion-margin-start ion-margin-end">
+          <ion-card-header>
+            <ion-card-subtitle class="flex items-center"
+              >Starting score
+              <span class="flex flex-1 items-center justify-end text-body">
+                💯
+              </span>
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content class="flex flex-row gap-x-2">
+            <ion-button
+              [color]="game.points == 301 ? 'primary' : 'dark'"
+              [fill]="game.points == 301 ? 'solid' : 'outline'"
+              expand="block"
+              class="basis-1/3"
+              (click)="game.points = 301"
+              >301</ion-button
+            >
+            <ion-button
+              [color]="game.points == 501 ? 'primary' : 'dark'"
+              [fill]="game.points == 501 ? 'solid' : 'outline'"
+              expand="block"
+              class="basis-1/3"
+              (click)="game.points = 501"
+              >501</ion-button
+            >
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-icon name="arrow-down"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-card class="ion-no-margin ion-margin-start ion-margin-end">
+          <ion-card-header>
+            <ion-card-subtitle class="flex items-center"
+              >Checkout mode
+              <span class="flex flex-1 items-center justify-end text-body">
+                ✅
+              </span>
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content class="flex flex-row gap-x-2">
+            <ion-button
+              [color]="game.mode == 'single' ? 'primary' : 'dark'"
+              [fill]="game.mode == 'single' ? 'solid' : 'outline'"
+              expand="block"
+              class="basis-1/3"
+              disabled
+              (click)="game.mode = 'single'"
+              >Single out</ion-button
+            >
+            <ion-button
+              [color]="game.mode == 'double' ? 'primary' : 'dark'"
+              [fill]="game.mode == 'double' ? 'solid' : 'outline'"
+              expand="block"
+              class="basis-1/3"
+              (click)="game.mode = 'double'"
+              >Double out</ion-button
+            >
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-icon name="arrow-down"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-card class="ion-no-margin ion-margin-start ion-margin-end">
+          <ion-card-header>
+            <ion-card-subtitle class="flex items-center"
+              >Legs to play
+              <span class="flex flex-1 items-center justify-end text-body">
+                🏁
+              </span>
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content class="flex flex-row gap-x-2">
+            <ion-button
+              [color]="game.legs == 1 ? 'primary' : 'dark'"
+              [fill]="game.legs == 1 ? 'solid' : 'outline'"
+              expand="block"
+              class="basis-1/3"
+              (click)="game.legs = 1"
+              >1</ion-button
+            >
+            <ion-button
+              [color]="game.legs == 3 ? 'primary' : 'dark'"
+              [fill]="game.legs == 3 ? 'solid' : 'outline'"
+              expand="block"
+              class="basis-1/3"
+              disabled
+              (click)="game.legs = 3"
+              >3</ion-button
+            >
+            <ion-button
+              [color]="game.legs == 5 ? 'primary' : 'dark'"
+              [fill]="game.legs == 5 ? 'solid' : 'outline'"
+              expand="block"
+              class="basis-1/3"
+              disabled
+              (click)="game.legs = 5"
+              >5</ion-button
+            >
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button color="primary" expand="block" class="ion-margin">
+      Create
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
       return;
     }
 
-    const { data } = await this.supabaseService.supabase
+    const { data, error } = await this.supabaseService.supabase
       .from('games')
       .select('id,game_players(*)')
       .eq('game_players.profile_id', this.supabaseService.user?.id)

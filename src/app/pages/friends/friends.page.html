@@ -1,0 +1,91 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button color="dark"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Friends</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      animated="true"
+      placeholder="Look for a friend"
+    ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-list class="border border-slate-200 shadow rounded-md">
+          <ion-item-sliding>
+            <ion-item lines="full">
+              <ion-avatar slot="start">
+                <img
+                  src="https://api.dicebear.com/5.x/bottts-neutral/svg?seed=99bdc574-c020-4504-9b53-51f48f207d2b"
+                />
+              </ion-avatar>
+              <ion-label>
+                <h1>Marvin Koch</h1>
+                <p>(Mawin)</p>
+              </ion-label>
+              <ion-icon name="mail" slot="end" color="dark"></ion-icon>
+            </ion-item>
+
+            <ion-item-options>
+              <ion-item-option color="danger">
+                <ion-icon name="person-remove" slot="icon-only"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+
+          <ion-item-sliding>
+            <ion-item lines="full">
+              <ion-avatar slot="start">
+                <img
+                  src="https://api.dicebear.com/5.x/bottts-neutral/svg?seed=4eb58b9f-8fc6-4c42-a6d6-fb0695072d04"
+                />
+              </ion-avatar>
+              <ion-label>
+                <h1>Martin Grafl</h1>
+                <p>(porgamer01)</p>
+              </ion-label>
+              <ion-icon name="mail" slot="end" color="dark"></ion-icon>
+            </ion-item>
+
+            <ion-item-options>
+              <ion-item-option color="danger">Remove</ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+
+          <ion-item-sliding>
+            <ion-item lines="none">
+              <ion-avatar slot="start">
+                <img
+                  src="https://api.dicebear.com/5.x/bottts-neutral/svg?seed=Encho"
+                />
+              </ion-avatar>
+              <ion-label>Encho</ion-label>
+              <ion-icon name="mail" slot="end" color="dark"></ion-icon>
+            </ion-item>
+
+            <ion-item-options side="end">
+              <ion-item-option color="danger">Remove</ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-fab slot="fixed" horizontal="center" vertical="bottom">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button>
+        <ion-icon name="person-add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>
