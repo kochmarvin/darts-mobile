@@ -3,89 +3,213 @@
     <ion-buttons slot="start">
       <ion-menu-button color="dark"></ion-menu-button>
     </ion-buttons>
-    <ion-title>Friends</ion-title>
+    <ion-title class="md:hidden">Friends</ion-title>
   </ion-toolbar>
-  <ion-toolbar>
-    <ion-searchbar
-      animated="true"
-      placeholder="Look for a friend"
-    ></ion-searchbar>
+  <ion-toolbar class="md:hidden">
+    <ion-searchbar animated="true" placeholder="Look for a friend" slot="start">
+    </ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-list class="border border-slate-200 shadow rounded-md">
-          <ion-item-sliding>
-            <ion-item lines="full">
-              <ion-avatar slot="start">
-                <img
-                  src="https://api.dicebear.com/5.x/bottts-neutral/svg?seed=99bdc574-c020-4504-9b53-51f48f207d2b"
-                />
-              </ion-avatar>
-              <ion-label>
-                <h1>Marvin Koch</h1>
-                <p>(Mawin)</p>
-              </ion-label>
-              <ion-icon name="mail" slot="end" color="dark"></ion-icon>
-            </ion-item>
+  <div class="flex flex-row">
+    <div
+      class="basis-1/3 flex-col hidden md:flex bg-white dark:bg-[var(--ion-toolbar-background)] border-r border-slate-200 dark:border-slate-600"
+    >
+      <div class="ion-padding-start text-heading-5 font-semibold mt-2">
+        Your friends
+      </div>
+      <div class="flex flex-row items-center">
+        <ion-searchbar
+          animated="true"
+          placeholder="Look for a friend"
+          slot="start"
+        >
+        </ion-searchbar>
+        <ion-button fill="clear" color="dark">
+          <ion-icon slot="icon-only" name="person-add"></ion-icon>
+        </ion-button>
+      </div>
 
-            <ion-item-options>
-              <ion-item-option color="danger">
-                <ion-icon name="person-remove" slot="icon-only"></ion-icon>
-              </ion-item-option>
-            </ion-item-options>
-          </ion-item-sliding>
+      <ion-list>
+        <ion-item-sliding>
+          <ion-item lines="full">
+            <ion-avatar slot="start">
+              <img
+                src="https://api.dicebear.com/5.x/bottts-neutral/svg?seed=99bdc574-c020-4504-9b53-51f48f207d2b"
+              />
+            </ion-avatar>
+            <ion-label>
+              <h1>Marvin Koch</h1>
+              <p>(Mawin)</p>
+            </ion-label>
+            <ion-icon name="mail" slot="end" color="dark"></ion-icon>
+          </ion-item>
 
-          <ion-item-sliding>
-            <ion-item lines="full">
-              <ion-avatar slot="start">
-                <img
-                  src="https://api.dicebear.com/5.x/bottts-neutral/svg?seed=4eb58b9f-8fc6-4c42-a6d6-fb0695072d04"
-                />
-              </ion-avatar>
-              <ion-label>
-                <h1>Martin Grafl</h1>
-                <p>(porgamer01)</p>
-              </ion-label>
-              <ion-icon name="mail" slot="end" color="dark"></ion-icon>
-            </ion-item>
+          <ion-item-options>
+            <ion-item-option color="danger">
+              <ion-icon
+                name="person-remove"
+                slot="icon-only"
+                size="small"
+              ></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+    </div>
 
-            <ion-item-options>
-              <ion-item-option color="danger">Remove</ion-item-option>
-            </ion-item-options>
-          </ion-item-sliding>
+    <ion-grid class="hidden md:block lg:m-3">
+      <ion-row>
+        <ion-col sizeLg="6" sizeMd="12">
+          <ion-card class="ion-no-margin shadow border border-slate-200 dark:border-slate-600">
+            <ion-card-header>
+              <ion-card-subtitle>Mawin </ion-card-subtitle>
+              <ion-card-title>Marvin Koch</ion-card-title>
+            </ion-card-header>
+            <ion-card-content> Friends since 20.01.2023 </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col sizeLg="6" sizeMd="12">
+          <ion-card class="ion-no-margin shadow border border-slate-200 dark:border-slate-600">
+            <ion-card-header>
+              <ion-card-subtitle
+                >Matches played
+                <span class="float-right">🎯</span></ion-card-subtitle
+              >
+              <ion-card-title>3000</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <span class="text-danger">-</span>18 from last week
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-card class="ion-no-margin shadow border border-slate-200 dark:border-slate-600">
+            <ion-card-header>
+              <ion-card-subtitle
+                >Avergage
+                <span class="float-right">⚡️</span></ion-card-subtitle
+              >
+              <ion-card-title>18</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <span class="text-success">+</span>18 from last week
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-card class="ion-no-margin shadow border border-slate-200 dark:border-slate-600">
+            <ion-card-header>
+              <ion-card-subtitle
+                >Favourite double
+                <span class="float-right">🔥</span></ion-card-subtitle
+              >
+              <ion-card-title>20</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <span class="opacity-0">filler</span>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeLg="6" sizeMd="12">
+          <ion-card class="ion-no-margin shadow border border-slate-200 dark:border-slate-600">
+            <ion-card-header> Bar Chart </ion-card-header>
+            <ion-card-content
+              class="flex justify-center relative w-full h-[35vh]"
+            >
+              <canvas
+                #barCanvas
+                style="position: relative; height: 35vh; width: 30vw"
+              ></canvas>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
 
-          <ion-item-sliding>
-            <ion-item lines="none">
-              <ion-avatar slot="start">
-                <img
-                  src="https://api.dicebear.com/5.x/bottts-neutral/svg?seed=Encho"
-                />
-              </ion-avatar>
-              <ion-label>Encho</ion-label>
-              <ion-icon name="mail" slot="end" color="dark"></ion-icon>
-            </ion-item>
+        <ion-col sizeLg="6" sizeMd="12">
+          <ion-card class="ion-no-margin shadow border border-slate-200 dark:border-slate-600">
+            <ion-card-header>
+              <ion-card-subtitle
+                >Wins and Losses
+                <span class="float-right">🏆 & 😞</span></ion-card-subtitle
+              >
+            </ion-card-header>
+            <ion-card-content
+              class="flex justify-center relative w-full h-[35vh]"
+            >
+              <canvas #winChart></canvas>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
-            <ion-item-options side="end">
-              <ion-item-option color="danger">Remove</ion-item-option>
-            </ion-item-options>
-          </ion-item-sliding>
-        </ion-list>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+    <ion-grid class="md:hidden">
+      <ion-row>
+        <ion-col size="12">
+          <ion-list class="border border-slate-200 shadow rounded-md">
+            <ion-item-sliding>
+              <ion-item lines="full">
+                <ion-avatar slot="start">
+                  <img
+                    src="https://api.dicebear.com/5.x/bottts-neutral/svg?seed=99bdc574-c020-4504-9b53-51f48f207d2b"
+                  />
+                </ion-avatar>
+                <ion-label>
+                  <h1>Marvin Koch</h1>
+                  <p>(Mawin)</p>
+                </ion-label>
+                <ion-icon name="mail" slot="end" color="dark"></ion-icon>
+              </ion-item>
 
-  <ion-fab slot="fixed" horizontal="center" vertical="bottom">
-    <ion-fab-button>
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-list side="top">
-      <ion-fab-button>
-        <ion-icon name="person-add"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
+              <ion-item-options>
+                <ion-item-option color="danger">
+                  <ion-icon name="person-remove" slot="icon-only"></ion-icon>
+                </ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+
+            <ion-item-sliding>
+              <ion-item lines="full">
+                <ion-avatar slot="start">
+                  <img
+                    src="https://api.dicebear.com/5.x/bottts-neutral/svg?seed=4eb58b9f-8fc6-4c42-a6d6-fb0695072d04"
+                  />
+                </ion-avatar>
+                <ion-label>
+                  <h1>Martin Grafl</h1>
+                  <p>(porgamer01)</p>
+                </ion-label>
+                <ion-icon name="mail" slot="end" color="dark"></ion-icon>
+              </ion-item>
+
+              <ion-item-options>
+                <ion-item-option color="danger">Remove</ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+
+            <ion-item-sliding>
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <img
+                    src="https://api.dicebear.com/5.x/bottts-neutral/svg?seed=Encho"
+                  />
+                </ion-avatar>
+                <ion-label>Encho</ion-label>
+                <ion-icon name="mail" slot="end" color="dark"></ion-icon>
+              </ion-item>
+
+              <ion-item-options side="end">
+                <ion-item-option color="danger">Remove</ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>

@@ -16,7 +16,7 @@
           <h3 class="text-heading-3 font-semibold">Darts.works</h3>
         </ion-col>
       </ion-row>
-      <form [formGroup]="loginForm" (ngSubmit)="login($event)">
+      <form [formGroup]="loginForm">
         <ion-row class="mt-9">
           <ion-col
             offset-lg="6"
@@ -111,7 +111,7 @@
               expand="block"
               fill="solid"
               [disabled]="!loginForm.valid"
-              type="submit"
+              (click)="login($event)"
               ><ion-icon
                 name="log-in"
                 slot="start"
@@ -141,6 +141,7 @@
           >
         </ion-col>
       </ion-row>
+
       <ion-row class="ion-no-margin">
         <ion-col
           offset-lg="6"
