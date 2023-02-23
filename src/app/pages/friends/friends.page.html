@@ -3,15 +3,70 @@
     <ion-buttons slot="start">
       <ion-menu-button color="dark"></ion-menu-button>
     </ion-buttons>
-    <ion-title class="md:hidden">Friends</ion-title>
+    <ion-title class="md:hidden">Your friends</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="dark" id="open-add-friend-modal" class="md:hidden">
+        <ion-icon name="person-add" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
   <ion-toolbar class="md:hidden">
-    <ion-searchbar animated="true" placeholder="Look for a friend" slot="start">
+    <ion-searchbar
+      animated="true"
+      placeholder="Look for a friend"
+      class="ion-no-padding"
+    >
     </ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-modal trigger="open-add-friend-modal">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="dismiss()" color="danger">
+              <ion-icon name="close" slot="icon-only"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>Add a new friend</ion-title>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-searchbar
+            animated="true"
+            placeholder="Search"
+            show-clear-button="focus"
+            [debounce]="500"
+            (ionChange)="searchProfilesFromDatabase($event)"
+          >
+          </ion-searchbar>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-list class="border border-slate-200 shadow rounded-md">
+          <ion-item-sliding>
+            <ion-item lines="full" *ngFor="let profile of foundProfiles">
+              <ion-avatar slot="start">
+                <img [src]="profile.profile_picture" />
+              </ion-avatar>
+              <ion-label>
+                <h1>{{ profile.first_name }} {{profile.last_name}}</h1>
+                <p>({{profile.nick_name}})</p>
+              </ion-label>
+              <ion-icon
+                name="add-circle"
+                slot="end"
+                color="dark"
+                (click)="addFriend(profile.id)"
+                *ngIf="!sentFriendRequests.includes(profile.id)"
+              ></ion-icon>
+            </ion-item>
+          </ion-item-sliding>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
   <div class="flex flex-row">
     <div
       class="basis-1/3 flex-col hidden md:flex bg-white dark:bg-[var(--ion-toolbar-background)] border-r border-slate-200 dark:border-slate-600"
@@ -26,7 +81,7 @@
           slot="start"
         >
         </ion-searchbar>
-        <ion-button fill="clear" color="dark">
+        <ion-button fill="clear" color="dark" id="open-add-friend-modal">
           <ion-icon slot="icon-only" name="person-add"></ion-icon>
         </ion-button>
       </div>
@@ -62,7 +117,9 @@
     <ion-grid class="hidden md:block lg:m-3">
       <ion-row>
         <ion-col sizeLg="6" sizeMd="12">
-          <ion-card class="ion-no-margin shadow border border-slate-200 dark:border-slate-600">
+          <ion-card
+            class="ion-no-margin shadow border border-slate-200 dark:border-slate-600"
+          >
             <ion-card-header>
               <ion-card-subtitle>Mawin </ion-card-subtitle>
               <ion-card-title>Marvin Koch</ion-card-title>
@@ -71,7 +128,9 @@
           </ion-card>
         </ion-col>
         <ion-col sizeLg="6" sizeMd="12">
-          <ion-card class="ion-no-margin shadow border border-slate-200 dark:border-slate-600">
+          <ion-card
+            class="ion-no-margin shadow border border-slate-200 dark:border-slate-600"
+          >
             <ion-card-header>
               <ion-card-subtitle
                 >Matches played
@@ -87,7 +146,9 @@
       </ion-row>
       <ion-row>
         <ion-col size="6">
-          <ion-card class="ion-no-margin shadow border border-slate-200 dark:border-slate-600">
+          <ion-card
+            class="ion-no-margin shadow border border-slate-200 dark:border-slate-600"
+          >
             <ion-card-header>
               <ion-card-subtitle
                 >Avergage
@@ -101,7 +162,9 @@
           </ion-card>
         </ion-col>
         <ion-col size="6">
-          <ion-card class="ion-no-margin shadow border border-slate-200 dark:border-slate-600">
+          <ion-card
+            class="ion-no-margin shadow border border-slate-200 dark:border-slate-600"
+          >
             <ion-card-header>
               <ion-card-subtitle
                 >Favourite double
@@ -117,7 +180,9 @@
       </ion-row>
       <ion-row>
         <ion-col sizeLg="6" sizeMd="12">
-          <ion-card class="ion-no-margin shadow border border-slate-200 dark:border-slate-600">
+          <ion-card
+            class="ion-no-margin shadow border border-slate-200 dark:border-slate-600"
+          >
             <ion-card-header> Bar Chart </ion-card-header>
             <ion-card-content
               class="flex justify-center relative w-full h-[35vh]"
@@ -131,7 +196,9 @@
         </ion-col>
 
         <ion-col sizeLg="6" sizeMd="12">
-          <ion-card class="ion-no-margin shadow border border-slate-200 dark:border-slate-600">
+          <ion-card
+            class="ion-no-margin shadow border border-slate-200 dark:border-slate-600"
+          >
             <ion-card-header>
               <ion-card-subtitle
                 >Wins and Losses

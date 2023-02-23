@@ -4,6 +4,7 @@
       >{{ games.get(supabaseService.user!.id)?.points }}</ion-label
     >
     <ion-segment
+      class="md:hidden"
       *ngIf="games.size == 2"
       (ionChange)="changeSelectedPlayer($event)"
       [value]="selectedPlayer"
@@ -85,7 +86,68 @@
   </div>
 </ion-content>
 
-<ion-content *ngIf="loaded && startingPlayer">
+<ion-content class="hidden md:block" *ngIf="loaded">
+  <ion-grid>
+    <ion-row class="mt-10">
+      <ion-col size="6" class="text-center" *ngFor="let id of playerIds">
+        <div
+          class="inline-flex items-center justify-center overflow-hidden rounded-full"
+        >
+          <svg class="w-[360px] h-[360px]">
+            <circle
+              class="text-slate-200 dark:text-black"
+              stroke-width="10"
+              stroke="currentColor"
+              fill="transparent"
+              r="180"
+              cx="50%"
+              cy="50%"
+            />
+            <circle
+              class="text-${color} dark:text-white origin-center -rotate-90"
+              stroke-width="10"
+              [attr.stroke-dasharray]="180 * 2 * math.PI"
+              [attr.stroke-dashoffset]="180 * 2 * math.PI - (math.trunc(((games.get(id)!.points)/ gameData.starting_points) * 100) / 100) * (180 * 2 * math.PI)"
+              stroke-linecap="round"
+              stroke="currentColor"
+              fill="transparent"
+              r="180"
+              cx="50%"
+              cy="50%"
+            />
+          </svg>
+          <div class="text-heading-3 font-semibold absolute">
+            {{(games.get(id)!.points)}}
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row class="mt-8">
+      <ion-col
+        *ngFor="let id of playerIds; let i = index"
+        [offset]="1 + i"
+        size="4"
+      >
+        <ion-list class="border border-slate-200 shadow rounded-md">
+          <ion-item *ngFor="let score of games.get(id)?.scores" lines="full">
+            <p slot="start" class="mr-2">
+              {{ this.utilService.getScoreIcon(this.games.get(id)!.points,
+              this.games.get(id)?.scores || [], score) }}
+            </p>
+
+            <ion-label
+              >{{ utilService.getFormattedScoreString(score.game_darts)
+              }}</ion-label
+            >
+            <p slot="end">{{ utilService.getSumOfScore(score) }}</p>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-content *ngIf="loaded && startingPlayer" class="md:hidden">
   <ion-grid>
     <ion-row>
       <ion-col>

@@ -16,6 +16,8 @@ export class AppComponent implements OnInit {
     { title: 'Profile', url: '/profile', icon: 'person' },
   ];
 
+  public notificatonCount: number = 0;
+
   constructor(
     public supabaseService: SupabaseService,
     public router: Router,
@@ -26,8 +28,17 @@ export class AppComponent implements OnInit {
     await this.supabaseService.setSession();
     await this.supabaseService.setUser();
 
-    if (!this.supabaseService.session) {
+    if (!this.supabaseService.session || !this.supabaseService.user) {
       return;
+    }
+
+    const { data: notifications } = await this.supabaseService.supabase
+      .from('friend_requests')
+      .select('from_profile_id')
+      .eq('to_profile_id', this.supabaseService.user.id);
+
+    if(notifications) {
+      this.notificatonCount = notifications.length;
     }
 
     const { data, error } = await this.supabaseService.supabase

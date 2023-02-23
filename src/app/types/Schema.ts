@@ -209,10 +209,10 @@ export interface Database {
         Insert: {
           created_at?: string
           id: string
-          losses: number
+          losses?: number
           total_score?: number
           total_throws?: number
-          wins: number
+          wins?: number
         }
         Update: {
           created_at?: string

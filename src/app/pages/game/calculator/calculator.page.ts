@@ -34,6 +34,7 @@ export class CalculatorPage implements OnInit, OnDestroy {
   public loaded: boolean = false;
   public currentPlayer: string = '';
   public flip: number = -1;
+  public math = Math;
 
   public startingPlayer:
     | Database['public']['Tables']['game_starters']['Row']
@@ -56,7 +57,10 @@ export class CalculatorPage implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-    this.selectedPlayer = this.supabaseService.user?.id as string;
+    if (this.supabaseService.user) {
+      this.selectedPlayer = this.supabaseService.user.id;
+      this.playerIds.push(this.supabaseService.user.id);
+    }
 
     this.resetCurrentScores();
     await this.fetchGameData();
@@ -281,7 +285,9 @@ export class CalculatorPage implements OnInit, OnDestroy {
     this.startingPlayer = starterPlayer[0];
 
     gameData.game_players.forEach((player: GamePlayer) => {
-      this.playerIds.push(player.profiles.id);
+      if (!this.playerIds.includes(player.profiles.id)) {
+        this.playerIds.push(player.profiles.id);
+      }
       this.games.set(player.profiles.id, {
         points:
           gameData.starting_points -

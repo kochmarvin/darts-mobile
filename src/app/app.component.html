@@ -24,6 +24,18 @@
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
+          <ion-menu-toggle>
+            <ion-item
+              routerDirection="root"
+              routerLink="/notifications"
+              lines="none"
+              detail="false"
+            >
+              <ion-icon slot="start" name="notifications"></ion-icon>
+              <ion-label>Notifications</ion-label>
+              <ion-badge color="danger" slot="end" *ngIf="notificatonCount > 0">{{ notificatonCount }}</ion-badge>
+            </ion-item>
+          </ion-menu-toggle>
           <ion-accordion-group>
             <ion-accordion value="first">
               <ion-item slot="header">

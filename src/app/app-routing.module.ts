@@ -33,7 +33,12 @@ const routes: Routes = [
   },
   {
     path: 'friends',
-    loadChildren: () => import('./pages/friends/friends.module').then( m => m.FriendsPageModule)
+    loadChildren: () => import('./pages/friends/friends.module').then( m => m.FriendsPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'notifications',
+    loadChildren: () => import('./pages/notifications/notifications.module').then( m => m.NotificationsPageModule)
   },
 ];
 
