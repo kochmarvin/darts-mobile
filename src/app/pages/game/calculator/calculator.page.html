@@ -35,11 +35,11 @@
 
 <ion-content
   class="flex flex-row items-center justify-center"
-  *ngIf="loaded && !startingPlayer"
+  *ngIf="loaded && !startingPlayer && !winner"
 >
   <div class="w-full h-full flex flex-col items-center justify-center">
     <div
-      class="bg-[var(--ion-color-light)] flex flex-col items-center justify-center p-6 gap-3 rounded-md"
+      class="bg-[var(--ion-color-light)] flex flex-col items-center justify-center p-6 gap-3 rounded-md border-slate-200 dark:border-slate-600 shadow"
       *ngIf="games.size != 2"
     >
       <h1 class="text-body-lg text-[var(--ion-color-dark)]">
@@ -147,7 +147,7 @@
   </ion-grid>
 </ion-content>
 
-<ion-content *ngIf="loaded && startingPlayer" class="md:hidden">
+<ion-content *ngIf="loaded && startingPlayer && !winner" class="md:hidden">
   <ion-grid>
     <ion-row>
       <ion-col>
@@ -194,6 +194,25 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+</ion-content>
+
+<ion-content *ngIf="winner">
+  <div class="w-full h-full flex flex-col items-center justify-center gap-y-6">
+    <div
+      class="bg-[var(--ion-color-light)] flex flex-col items-center justify-center p-6 gap-3 rounded-md border-slate-200 dark:border-slate-600 shadow"
+    >
+      <div class="flex flex-row justify-center items-center gap-x-2">
+        <img
+          [src]="winner.profile_picture"
+          width="80"
+          class="rounded-full border-slate-200 dark:border-slate-600"
+        />
+        <p class="text-body-lg font-semibold">{{ winner.nick_name }}</p>
+      </div>
+      <p class="text-heading-6">Won the game 🏆</p>
+    </div>
+    <ion-button expand="block" color="primary" routerLink="/dashboard">Return to dashboard</ion-button>
+  </div>
 </ion-content>
 
 <ion-footer

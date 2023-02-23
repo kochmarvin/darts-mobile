@@ -34,6 +34,7 @@ export class CalculatorPage implements OnInit, OnDestroy {
   public loaded: boolean = false;
   public currentPlayer: string = '';
   public flip: number = -1;
+  public winner: Database['public']['Tables']['profiles']['Row'] | null = null;
   public math = Math;
 
   public startingPlayer:
@@ -220,6 +221,11 @@ export class CalculatorPage implements OnInit, OnDestroy {
             game.scores
           );
 
+        if (this.games.get(game.profile.id)?.points == 0) {
+          this.winner = this.games.get(game.profile.id)
+            ?.profile as Database['public']['Tables']['profiles']['Row'];
+        }
+
         if (this.games.get(this.supabaseService.user!.id)!.points == 0) {
           await this.supabaseService.supabase
             .from('games')
@@ -305,9 +311,7 @@ export class CalculatorPage implements OnInit, OnDestroy {
       this.currentPlayer = this.playerIds.find(
         (id) => id != this.latestScore?.profile_id
       )!;
-
-      console.log(this.currentPlayer);
-    } else if (starterPlayer) {
+    } else if (starterPlayer && this.playerIds.length > 1) {
       this.currentPlayer = starterPlayer[0].id;
     }
   }

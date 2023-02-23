@@ -2,9 +2,9 @@
   <ion-split-pane contentId="main-content" when="false">
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
-        <ion-list id="inbox-list">
-          <ion-list-header>Welcome</ion-list-header>
-          <ion-note>mar</ion-note>
+        <ion-list id="inbox-list" class="mt-5">
+          <ion-list-header>Welcome back to</ion-list-header>
+          <ion-note>darts.works</ion-note>
 
           <ion-menu-toggle
             auto-hide="false"
@@ -16,7 +16,7 @@
               lines="none"
               detail="false"
               [ngClass]="
-                this.router.url === p.url ? 'border-l border-primary' : ''
+                this.router.url === p.url ? 'border-l-4 border-primary' : ''
               "
               routerLinkActive="selected"
             >
@@ -33,7 +33,12 @@
             >
               <ion-icon slot="start" name="notifications"></ion-icon>
               <ion-label>Notifications</ion-label>
-              <ion-badge color="danger" slot="end" *ngIf="notificatonCount > 0">{{ notificatonCount }}</ion-badge>
+              <ion-badge
+                color="danger"
+                slot="end"
+                *ngIf="notificatonCount > 0"
+                >{{ notificatonCount }}</ion-badge
+              >
             </ion-item>
           </ion-menu-toggle>
           <ion-accordion-group>

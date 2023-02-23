@@ -60,7 +60,9 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-card class="ion-no-margin ion-margin-start ion-margin-end shadow border border-slate-200 dark:border-slate-600">
+        <ion-card
+          class="ion-no-margin ion-margin-start ion-margin-end shadow border border-slate-200 dark:border-slate-600"
+        >
           <ion-card-header>
             <ion-card-subtitle class="flex items-center"
               >Starting score
@@ -97,7 +99,9 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-card class="ion-no-margin ion-margin-start ion-margin-end shadow border border-slate-200 dark:border-slate-600">
+        <ion-card
+          class="ion-no-margin ion-margin-start ion-margin-end shadow border border-slate-200 dark:border-slate-600"
+        >
           <ion-card-header>
             <ion-card-subtitle class="flex items-center"
               >Checkout mode
@@ -135,7 +139,9 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-card class="ion-no-margin ion-margin-start ion-margin-end shadow border border-slate-200 dark:border-slate-600">
+        <ion-card
+          class="ion-no-margin ion-margin-start ion-margin-end shadow border border-slate-200 dark:border-slate-600"
+        >
           <ion-card-header>
             <ion-card-subtitle class="flex items-center"
               >Legs to play
@@ -179,8 +185,13 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-    <ion-button color="primary" expand="block" class="ion-margin">
-      Create
+    <ion-button
+      color="primary"
+      expand="block"
+      class="ion-margin"
+      (click)="createGame()"
+      ><ion-spinner name="crescent" *ngIf="loading"></ion-spinner>
+      <span *ngIf="!loading">Create</span>
     </ion-button>
   </ion-toolbar>
 </ion-footer>
