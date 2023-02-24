@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
     await this.supabaseService.setSession();
     await this.supabaseService.setUser();
 
-    if (!this.supabaseService.session || !this.supabaseService.user) {
+    if (!this.supabaseService.session || !this.supabaseService.user || !this.supabaseService.supabase) {
       return;
     }
 
@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
       this.notificatonCount = notifications.length;
     }
 
-    const { data, error } = await this.supabaseService.supabase
+    const { data } = await this.supabaseService.supabase
       .from('games')
       .select('id,game_players(*)')
       .eq('game_players.profile_id', this.supabaseService.user?.id)

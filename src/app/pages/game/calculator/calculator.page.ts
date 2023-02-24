@@ -5,6 +5,7 @@ import { SupabaseService } from 'src/app/services/supabase/supabase.service';
 import { UtilService } from 'src/app/services/utils/util.service';
 import { Game, GameData, GamePlayer, Score } from 'src/app/types/game.types';
 import { Database } from 'src/app/types/Schema';
+import { Share } from '@capacitor/share';
 import Rand from 'rand-seed';
 
 @Component({
@@ -68,6 +69,15 @@ export class CalculatorPage implements OnInit, OnDestroy {
     this.startRealtimeListeners();
     await this.checkIfMyTurn();
     this.loaded = true;
+  }
+
+  public async shareRoom() {
+    await Share.share({
+      title: 'Hello Darter 🎯!',
+      text: `${this.games.get(this.supabaseService.user!.id)?.profile.nick_name} really wants to play a game against you.`,
+      url: `http://darts.works/join?id=${this.gameData.id}`,
+      dialogTitle: 'Share with a Darter',
+    });
   }
 
   public async checkIfMyTurn(): Promise<void> {
