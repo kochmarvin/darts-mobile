@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, IonRouterOutlet } from '@ionic/angular';
+import {
+  AlertController,
+  IonRouterOutlet,
+  ToastController,
+} from '@ionic/angular';
 import { SupabaseService } from './services/supabase/supabase.service';
 import { Database } from './types/Schema';
 @Component({
@@ -21,14 +25,19 @@ export class AppComponent implements OnInit {
   constructor(
     public supabaseService: SupabaseService,
     public router: Router,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private toastController: ToastController
   ) {}
 
   async ngOnInit(): Promise<void> {
     await this.supabaseService.setSession();
     await this.supabaseService.setUser();
 
-    if (!this.supabaseService.session || !this.supabaseService.user || !this.supabaseService.supabase) {
+    if (
+      !this.supabaseService.session ||
+      !this.supabaseService.user ||
+      !this.supabaseService.supabase
+    ) {
       return;
     }
 
@@ -37,7 +46,7 @@ export class AppComponent implements OnInit {
       .select('from_profile_id')
       .eq('to_profile_id', this.supabaseService.user.id);
 
-    if(notifications) {
+    if (notifications) {
       this.notificatonCount = notifications.length;
     }
 
@@ -72,6 +81,76 @@ export class AppComponent implements OnInit {
     });
 
     await alert.present();
+  }
+
+  public async showJoinGameAlert() {
+    const alert = await this.alertController.create({
+      header: 'Please enter the room Key',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'Join',
+          role: 'confirm',
+        },
+      ],
+      inputs: [
+        {
+          placeholder: 'Room Key',
+          attributes: {
+            maxlength: 6,
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+    const { data, role } = await alert.onDidDismiss();
+
+    if (role === 'confirm') {
+      console.log(data.values[0]);
+
+      const { data: room } = await this.supabaseService.supabase
+        .from('game_keys')
+        .select('*')
+        .eq('key', data.values[0])
+        .single();
+
+      if (!room) {
+        const toast = await this.toastController.create({
+          message: 'There is no room with this key.',
+          duration: 2000,
+          icon: 'alert-circle',
+          position: 'bottom',
+          color: 'danger',
+        });
+
+        return await toast.present();
+      }
+
+      const { error } = await this.supabaseService.supabase
+        .from('game_players')
+        .insert({
+          game_id: room.id,
+          profile_id: this.supabaseService.user?.id,
+        });
+
+      if (error) {
+        const toast = await this.toastController.create({
+          message: 'The room is already full',
+          duration: 2000,
+          icon: 'alert-circle',
+          position: 'bottom',
+          color: 'danger',
+        });
+
+        return await toast.present();
+      }
+
+      this.router.navigateByUrl(`/calculator/${room.id}`);
+    }
   }
 
   public async logOut() {
