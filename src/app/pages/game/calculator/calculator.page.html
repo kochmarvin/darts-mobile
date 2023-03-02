@@ -18,7 +18,7 @@
       </ion-segment-button>
     </ion-segment>
 
-    <ion-title class="font-code" *ngIf="gameData?.game_keys?.key">
+    <ion-title class="font-code" *ngIf="gameData?.game_keys?.key && gameData.game_players.length < 2">
       {{ gameData.game_keys.key }}
     </ion-title>
 
@@ -239,7 +239,7 @@
           class="ion-text-center flex flex-row justify-center gap-2 items-center"
         >
           <h1
-            class="p-3 border border-slate-200 rounded-sm text-body-lg"
+            class="p-3 border border-slate-200 dark:border-slate-600 rounded-sm text-body-lg"
             *ngFor="let score of this.currentScore.game_darts"
           >
             {{ this.utilService.formatNumber(score.value,
@@ -253,7 +253,7 @@
             <ion-button
               *ngFor="let number of [1, 2, 3, 4, 5,6 ,7]"
               expand="full"
-              class="w-full border border-slate-200"
+              class="w-full border border-slate-200 dark:border-slate-600"
               color="light"
               (click)="addScore(number)"
             >
@@ -268,7 +268,7 @@
             <ion-button
               *ngFor="let number of [8, 9, 10, 11, 12, 13, 14]"
               expand="full"
-              class="w-full border border-slate-200"
+              class="w-full border border-slate-200 dark:border-slate-600"
               color="light"
               (click)="addScore(number)"
             >
@@ -283,7 +283,7 @@
             <ion-button
               *ngFor="let number of [15, 16, 17, 18, 19, 20, 25]"
               expand="full"
-              class="w-full border border-slate-200"
+              class="w-full border border-slate-200 dark:border-slate-600"
               color="light"
               (click)="addScore(number)"
               [disabled]="number == 25 && activeMultiplier == 3"
@@ -298,7 +298,7 @@
           <div class="flex flex-row gap-3">
             <ion-button
               expand="full"
-              class="w-1/2 border border-slate-200"
+              class="w-1/2 border border-slate-200 dark:border-slate-600"
               color="light"
               (click)="addScore(0)"
             >

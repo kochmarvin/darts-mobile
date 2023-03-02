@@ -74,7 +74,9 @@ export class CalculatorPage implements OnInit, OnDestroy {
   public async shareRoom() {
     await Share.share({
       title: 'Hello Darter 🎯!',
-      text: `${this.games.get(this.supabaseService.user!.id)?.profile.nick_name} really wants to play a game against you.`,
+      text: `${
+        this.games.get(this.supabaseService.user!.id)?.profile.nick_name
+      } really wants to play a game against you.`,
       url: `http://darts.works/join?id=${this.gameData.id}`,
       dialogTitle: 'Share with a Darter',
     });
@@ -323,8 +325,10 @@ export class CalculatorPage implements OnInit, OnDestroy {
       this.currentPlayer = this.playerIds.find(
         (id) => id != this.latestScore?.profile_id
       )!;
-    } else if (starterPlayer && this.playerIds.length > 1) {
+    } else if (starterPlayer.length > 0 && this.playerIds.length > 1) {
       this.currentPlayer = starterPlayer[0].id;
+    } else {
+      this.flipCoin();
     }
   }
 
