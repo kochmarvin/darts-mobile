@@ -64,6 +64,10 @@ export class UtilService {
   ): string {
     let text = '';
 
+    if(darts.length == 0) {
+      return "";
+    }
+
     for (let i = 0; i < darts.length - 1; i++) {
       text += this.formatNumber(darts[i].value, darts[i].multiplier) + ' - ';
     }

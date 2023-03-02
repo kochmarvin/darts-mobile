@@ -138,7 +138,7 @@
         [offset]="1 + i"
         size="4"
       >
-        <ion-list class="border border-slate-200 shadow rounded-md">
+        <ion-list class="border border-slate-200 dark:border-slate-600 shadow rounded-md">
           <ion-item *ngFor="let score of games.get(id)?.scores" lines="full">
             <p slot="start" class="mr-2">
               {{ this.utilService.getScoreIcon(this.games.get(id)!.points,
@@ -162,7 +162,7 @@
     <ion-row>
       <ion-col>
         <ion-item
-          class="border-l-2 border-t border-b border-r border-b-slate-200 border-t-slate-200 border-r-slate-200 shadow rounded-md"
+          class="border-l-2 border-t border-b border-r border-b-slate-200 border-t-slate-200 border-r-slate-200 dark:border-b-slate-600 dark:border-r-slate-600 dark:border-t-slate-600 shadow rounded-md"
           [class.border-danger]="selectedPlayer != currentPlayer"
           [class.border-success]="selectedPlayer == currentPlayer"
         >
@@ -183,7 +183,7 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-list class="border border-slate-200 shadow rounded-md">
+        <ion-list class="border border-slate-200 dark:border-slate-600 shadow rounded-md" *ngIf="games.get(this.selectedPlayer)?.scores!.length > 0">
           <ion-item
             *ngFor="let score of games.get(this.selectedPlayer)?.scores"
             lines="full"
@@ -230,7 +230,7 @@
 <ion-footer
   class="transition duration-500"
   [ngClass]="closed ? 'translate-y-full' : 'translate-y-0'"
-  [class.hidden]="startingPlayer === undefined || !loaded || closed"
+  [class.hidden]="startingPlayer === undefined || !loaded || closed || winner"
 >
   <ion-toolbar>
     <ion-grid>
