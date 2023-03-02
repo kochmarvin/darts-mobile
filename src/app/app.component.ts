@@ -15,7 +15,6 @@ import { Database } from './types/Schema';
 export class AppComponent implements OnInit {
   public appPages = [
     { title: 'Dashboard', url: '/dashboard', icon: 'home' },
-    { title: 'Game', url: '/game', icon: 'game-controller' },
     { title: 'Friends', url: '/friends', icon: 'people' },
     { title: 'Profile', url: '/profile', icon: 'person' },
   ];
