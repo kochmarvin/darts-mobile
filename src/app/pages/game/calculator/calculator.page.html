@@ -18,6 +18,10 @@
       </ion-segment-button>
     </ion-segment>
 
+    <ion-title class="font-code" *ngIf="gameData?.game_keys?.key">
+      {{ gameData.game_keys.key }}
+    </ion-title>
+
     <ion-buttons slot="end">
       <ion-button color="primary" (click)="shareRoom()">
         <ion-icon name="share-outline" slot="icon-only"></ion-icon>

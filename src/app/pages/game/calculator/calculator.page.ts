@@ -281,6 +281,8 @@ export class CalculatorPage implements OnInit, OnDestroy {
 
     this.gameData = gameData;
 
+    console.log(gameData);
+
     const { data: latestScore } = (await this.supabaseService.supabase
       .from('game_scores')
       .select('*')

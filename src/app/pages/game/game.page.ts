@@ -28,6 +28,18 @@ export class GamePage implements OnInit {
 
   ngOnInit() {}
 
+  private createRoomId(length: number) {
+		let result = '';
+		const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		const charactersLength = characters.length;
+		let counter = 0;
+		while (counter < length) {
+			result += characters.charAt(Math.floor(Math.random() * charactersLength));
+			counter += 1;
+		}
+		return result;
+	};
+
   public async createGame(): Promise<void> {
     this.loading = true;
     const { data: room } = (await this.supabaseService.supabase
@@ -51,6 +63,11 @@ export class GamePage implements OnInit {
 
       return await toast.present();
     }
+
+    await this.supabaseService.supabase.from('game_keys').insert({
+      id: room.id,
+			key: this.createRoomId(6)
+    });
 
     const { error } = await this.supabaseService.supabase
       .from('game_players')
