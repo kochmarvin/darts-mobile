@@ -9,45 +9,104 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col size="6">
-        <div
-          class="bg-[var(--ion-color-light)] flex flex-col gap-y-2 p-6 rounded-lg shadow"
+      <ion-col sizeLg="12" sizeMd="12">
+        <ion-card
+          class="ion-no-margin shadow border border-slate-200 dark:border-slate-600"
         >
-          <div class="flex flex-row">
-            <div class="capitalize text-heading-6">Average</div>
-            <div class="basis-full inline-flex justify-end text-heading-6">
-              ⚡️
-            </div>
-          </div>
-          <div class="flex justify-start">
-            <div class="text-heading-5 font-semibold">129</div>
-          </div>
-          <div class="pt-4">
-            <span class="text-success text-body-lg">+</span>
-            <span class="text-body-lg"> 18</span>
-            <span class="text-body-lg"> last week</span>
-          </div>
-        </div>
+          <ion-card-header>
+            <ion-card-subtitle>{{ profile?.nick_name }}</ion-card-subtitle>
+            <ion-card-title
+              >{{ profile?.first_name }} {{profile?.last_name}}</ion-card-title
+            >
+          </ion-card-header>
+          <ion-card-content>
+            joined on {{ supabaseService.user?.created_at | date : 'dd-MM-yyyy'
+            }}
+          </ion-card-content>
+        </ion-card>
       </ion-col>
-      <ion-col size="6">
-        <div
-          class="bg-[var(--ion-color-light)] flex flex-col gap-y-2 p-6 rounded-lg shadow"
+      <ion-col size="12" *ngIf="profile">
+        <ion-card
+          class="ion-no-margin shadow border border-slate-200 dark:border-slate-600"
         >
-          <div class="flex flex-row">
-            <div class="capitalize text-heading-6">Average</div>
-            <div class="basis-full inline-flex justify-end text-heading-6">
-              ⚡️
-            </div>
-          </div>
-          <div class="flex justify-start">
-            <div class="text-heading-5 font-semibold">129</div>
-          </div>
-          <div class="pt-4">
-            <span class="text-success text-body-lg">+</span>
-            <span class="text-body-lg"> 18</span>
-            <span class="text-body-lg"> last week</span>
-          </div>
-        </div>
+          <ion-card-header>
+            <ion-card-subtitle
+              >Matches played
+              <span class="float-right">🎯</span></ion-card-subtitle
+            >
+            <ion-card-title
+              >{{ profile!.wins + profile!.losses }}</ion-card-title
+            >
+          </ion-card-header>
+          <ion-card-content>
+            <!-- <span class="text-danger">-</span>from last week -->
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" *ngIf="this.statistics">
+        <ion-card
+          class="ion-no-margin shadow border border-slate-200 dark:border-slate-600"
+        >
+          <ion-card-header>
+            <ion-card-subtitle
+              >Avergage <span class="float-right">⚡️</span></ion-card-subtitle
+            >
+            <ion-card-title
+              >{{ (this.statistics![0].total_score /
+              this.statistics![0].total_throws).toFixed(2)}}</ion-card-title
+            >
+          </ion-card-header>
+          <ion-card-content>
+            <!-- <span class="text-success">+</span>18 from last week -->
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <!-- <ion-col size="12">
+        <ion-card
+          class="ion-no-margin shadow border border-slate-200 dark:border-slate-600"
+        >
+          <ion-card-header>
+            <ion-card-subtitle
+              >Favourite double
+              <span class="float-right">🔥</span></ion-card-subtitle
+            >
+            <ion-card-title>20</ion-card-title>
+          </ion-card-header>
+          <ion-card-content> </ion-card-content>
+        </ion-card>
+      </ion-col> -->
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-card
+          class="ion-no-margin shadow border border-slate-200 dark:border-slate-600"
+        >
+          <ion-card-header> Bar Chart </ion-card-header>
+          <ion-card-content class="flex justify-center relative">
+            <canvas
+              #barCanvas
+              style="position: relative; height: 35vh; width: 100vw"
+            ></canvas>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="12">
+        <ion-card
+          class="ion-no-margin shadow border border-slate-200 dark:border-slate-600"
+        >
+          <ion-card-header>
+            <ion-card-subtitle
+              >Wins and Losses
+              <span class="float-right">🏆 & 😞</span></ion-card-subtitle
+            >
+          </ion-card-header>
+          <ion-card-content class="flex justify-center relative w-full">
+            <canvas #winChart></canvas>
+          </ion-card-content>
+        </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>

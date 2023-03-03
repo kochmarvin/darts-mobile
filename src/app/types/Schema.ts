@@ -29,17 +29,17 @@ export interface Database {
       friends: {
         Row: {
           created_at: string
-          fist_profile_id: string
+          first_profile_id: string
           second_profile_id: string
         }
         Insert: {
           created_at?: string
-          fist_profile_id: string
+          first_profile_id: string
           second_profile_id: string
         }
         Update: {
           created_at?: string
-          fist_profile_id?: string
+          first_profile_id?: string
           second_profile_id?: string
         }
       }
@@ -179,6 +179,7 @@ export interface Database {
           created_at: string
           game_type: string
           id: string
+          legs: number
           running: boolean
           starting_points: number
         }
@@ -186,6 +187,7 @@ export interface Database {
           created_at?: string
           game_type: string
           id?: string
+          legs?: number
           running?: boolean
           starting_points?: number
         }
@@ -193,6 +195,7 @@ export interface Database {
           created_at?: string
           game_type?: string
           id?: string
+          legs?: number
           running?: boolean
           starting_points?: number
         }
@@ -229,24 +232,30 @@ export interface Database {
           first_name: string
           id: string
           last_name: string
+          losses: number
           nick_name: string
           profile_picture: string
+          wins: number
         }
         Insert: {
           created_at?: string
           first_name?: string
           id?: string
           last_name?: string
+          losses?: number
           nick_name?: string
           profile_picture?: string
+          wins?: number
         }
         Update: {
           created_at?: string
           first_name?: string
           id?: string
           last_name?: string
+          losses?: number
           nick_name?: string
           profile_picture?: string
+          wins?: number
         }
       }
     }

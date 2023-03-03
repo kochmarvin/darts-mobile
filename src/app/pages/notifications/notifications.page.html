@@ -1,9 +1,45 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>notifications</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button color="dark"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Notifications</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-list
+          class="border border-slate-200 dark:border-slate-600 shadow rounded-md"
+          *ngIf="notifications.length > 0"
+        >
+          <ion-item *ngFor="let notification of notifications" lines="full">
+            <ion-avatar slot="start">
+              <img [src]="notification.from_profile_id.profile_picture" />
+            </ion-avatar>
+            <ion-label>
+              <h1>{{ notification.from_profile_id.nick_name }}</h1>
+              <p>Friend Request</p>
+            </ion-label>
+            <ion-button
+              slot="end"
+              color="danger"
+              fill="clear"
+              (click)="declineFriendRequest(notification.from_profile_id.id)"
+              ><ion-icon name="close" slot="icon-only"></ion-icon
+            ></ion-button>
+            <ion-button
+              slot="end"
+              color="success"
+              fill="clear"
+              (click)="acceptFriendRequest(notification.from_profile_id.id)"
+              ><ion-icon name="checkmark" slot="icon-only"></ion-icon
+            ></ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

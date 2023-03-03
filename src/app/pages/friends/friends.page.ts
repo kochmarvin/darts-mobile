@@ -22,7 +22,9 @@ export class FriendsPage implements AfterViewInit {
   barChart: any;
   winChart: any;
 
-  public friends: Database['public']['Tables']['profiles']['Row'][] = [];
+  public friends: (Database['public']['Tables']['profiles']['Row'] & {
+    column: string;
+  })[] = [];
   public foundProfiles: Database['public']['Tables']['profiles']['Row'][] = [];
   public sentFriendRequests: string[] = [];
 
@@ -40,15 +42,68 @@ export class FriendsPage implements AfterViewInit {
       .select('to_profile_id')
       .eq('from_profile_id', this.supabaseService.user?.id);
 
-    // const { data: friends } = await this.supabaseService.supabase
-    //   .from('friends')
-    //   .select('').contains();
+    const { data: friends } = await this.supabaseService.supabase
+      .from('friends')
+      .select('first_profile_id(*),second_profile_id(*)')
+      .or(
+        `second_profile_id.eq.${this.supabaseService.user?.id},first_profile_id.eq.${this.supabaseService.user?.id}`
+      );
+
+    if (friends) {
+      friends.forEach((friend) => {
+        if (friend.first_profile_id.id !== this.supabaseService.user?.id) {
+          this.friends.push({ ...friend.first_profile_id, column: 'first' });
+        } else {
+          this.friends.push({ ...friend.second_profile_id, column: 'second' });
+        }
+      });
+    }
 
     if (sentRequests) {
       this.sentFriendRequests = sentRequests.map(
         (request) => request.to_profile_id
       );
     }
+  }
+
+  public async removeFriend(id: string, column: string): Promise<void> {
+    const { error } = await this.supabaseService.supabase
+      .from('friends')
+      .delete()
+      .match({
+        first_profile_id:
+          column === 'first' ? id : this.supabaseService.user?.id,
+        second_profile_id:
+          column === 'first' ? this.supabaseService.user?.id : id,
+      });
+
+    if (error) {
+      const toast = await this.toastController.create({
+        message: 'An error occured, try again.',
+        duration: 2000,
+        icon: 'alert-circle',
+        position: 'bottom',
+        color: 'danger',
+      });
+
+      return await toast.present();
+    }
+
+    const index = this.friends.findIndex((friend) => {
+      return friend.id === id;
+    });
+
+    this.friends.splice(index, 1);
+
+    const toast = await this.toastController.create({
+      message: 'Friend deleted.',
+      duration: 2000,
+      icon: 'information-circle',
+      position: 'bottom',
+      color: 'success',
+    });
+
+    return await toast.present();
   }
 
   public async addFriend(id: string): Promise<void> {
