@@ -51,7 +51,10 @@ export class LoginPage implements OnInit {
       this.supabaseService.setUser();
     }
 
-    this.errorMessage = `Error: ${error?.message}`;
+    if (error) {
+      this.errorMessage = `Error: ${error?.message}`;
+    }
+
     this.logginIn = false;
   }
 }
