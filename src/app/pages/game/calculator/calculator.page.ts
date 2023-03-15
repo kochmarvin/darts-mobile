@@ -59,16 +59,16 @@ export class CalculatorPage implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-    if (this.supabaseService.user) {
-      this.selectedPlayer = this.supabaseService.user.id;
-      this.playerIds.push(this.supabaseService.user.id);
-    }
-
     this.resetCurrentScores();
     await this.fetchGameData();
     this.startRealtimeListeners();
     await this.checkIfMyTurn();
     this.loaded = true;
+
+    if (this.supabaseService.user) {
+      this.selectedPlayer = this.supabaseService.user.id;
+      this.playerIds.push(this.supabaseService.user.id);
+    }
   }
 
   public async shareRoom() {
@@ -321,14 +321,14 @@ export class CalculatorPage implements OnInit, OnDestroy {
       });
     });
 
+    console.log(starterPlayer);
+
     if (this.latestScore) {
       this.currentPlayer = this.playerIds.find(
         (id) => id != this.latestScore?.profile_id
       )!;
     } else if (starterPlayer.length > 0 && this.playerIds.length > 1) {
       this.currentPlayer = starterPlayer[0].id;
-    } else {
-      this.flipCoin();
     }
   }
 
@@ -387,6 +387,8 @@ export class CalculatorPage implements OnInit, OnDestroy {
 
         this.selectedPlayer = winner!;
         this.currentPlayer = winner!;
+
+        console.log(winner);
 
         if (winner === this.supabaseService.user?.id) {
           const { data: starter } = await this.supabaseService.supabase
