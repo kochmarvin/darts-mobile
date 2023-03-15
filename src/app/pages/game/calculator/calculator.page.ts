@@ -303,6 +303,7 @@ export class CalculatorPage implements OnInit, OnDestroy {
       if (!this.playerIds.includes(player.profiles.id)) {
         this.playerIds.push(player.profiles.id);
       }
+
       this.games.set(player.profiles.id, {
         points:
           gameData.starting_points -
@@ -314,17 +315,23 @@ export class CalculatorPage implements OnInit, OnDestroy {
           player.profiles as Database['public']['Tables']['profiles']['Row'],
         scores: player.game_scores as Score[],
       });
+
+      console.log("ID", player.profiles.id);
+      console.log("GAME", this.games.get(player.profiles.id));
     });
 
     console.log(starterPlayer);
     console.log(this.playerIds);
 
     if (this.latestScore) {
+      console.log("hello");
       this.currentPlayer = this.playerIds.find(
         (id) => id != this.latestScore?.profile_id
       )!;
+      this.selectedPlayer = this.currentPlayer;
     } else if (starterPlayer.length > 0 && this.playerIds.length > 1) {
       this.currentPlayer = starterPlayer[0].id;
+      this.selectedPlayer = this.currentPlayer;
     } else if(this.playerIds.length > 1) {
       this.flipCoin();
     }
@@ -378,7 +385,7 @@ export class CalculatorPage implements OnInit, OnDestroy {
         if (!this.supabaseService.session) {
           return;
         }
-        
+
         const winner = this.playerIds[this.flip];
 
         this.selectedPlayer = winner!;
