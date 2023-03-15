@@ -59,11 +59,6 @@ export class CalculatorPage implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-    if (this.supabaseService.user) {
-      this.selectedPlayer = this.supabaseService.user.id;
-      this.playerIds.push(this.supabaseService.user.id);
-    }
-    
     this.resetCurrentScores();
     await this.fetchGameData();
     this.startRealtimeListeners();
@@ -329,7 +324,10 @@ export class CalculatorPage implements OnInit, OnDestroy {
       )!;
     } else if (starterPlayer.length > 0 && this.playerIds.length > 1) {
       this.currentPlayer = starterPlayer[0].id;
+    } else {
+      this.flipCoin();
     }
+
   }
 
   public undoScore() {
@@ -397,6 +395,7 @@ export class CalculatorPage implements OnInit, OnDestroy {
               id: this.route.snapshot.paramMap.get('id'),
               profile_id: this.supabaseService.user?.id,
             });
+            
           this.closed = false;
         }
 
