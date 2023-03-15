@@ -324,7 +324,7 @@ export class CalculatorPage implements OnInit, OnDestroy {
       )!;
     } else if (starterPlayer.length > 0 && this.playerIds.length > 1) {
       this.currentPlayer = starterPlayer[0].id;
-    } else {
+    } else if(this.playerIds.length > 1) {
       this.flipCoin();
     }
 
@@ -395,7 +395,7 @@ export class CalculatorPage implements OnInit, OnDestroy {
               id: this.route.snapshot.paramMap.get('id'),
               profile_id: this.supabaseService.user?.id,
             });
-            
+
           this.closed = false;
         }
 
