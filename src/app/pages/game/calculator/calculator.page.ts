@@ -184,6 +184,8 @@ export class CalculatorPage implements OnInit, OnDestroy {
         this.selectedPlayer = this.playerIds.find(
           (id) => id != payload.new['profile_id']
         ) as string;
+        
+        this.currentPlayer = this.selectedPlayer;
         return;
       }
     );
