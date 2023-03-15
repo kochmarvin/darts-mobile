@@ -378,9 +378,7 @@ export class CalculatorPage implements OnInit, OnDestroy {
         if (!this.supabaseService.session) {
           return;
         }
-
-        const myId = this.supabaseService.user?.id;
-
+        
         const winner = this.playerIds[this.flip];
 
         this.selectedPlayer = winner!;

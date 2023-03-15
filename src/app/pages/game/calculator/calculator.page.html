@@ -18,7 +18,7 @@
       </ion-segment-button>
     </ion-segment>
 
-    <ion-title class="font-code" *ngIf="gameData?.game_keys?.key && gameData.game_players.length < 2">
+    <ion-title class="font-code" *ngIf="gameData?.game_keys?.key && playerIds.length < 2">
       {{ gameData.game_keys.key }}
     </ion-title>
 
