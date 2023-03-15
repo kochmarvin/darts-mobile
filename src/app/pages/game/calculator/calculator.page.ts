@@ -59,16 +59,16 @@ export class CalculatorPage implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
+    if (this.supabaseService.user) {
+      this.selectedPlayer = this.supabaseService.user.id;
+      this.playerIds.push(this.supabaseService.user.id);
+    }
+    
     this.resetCurrentScores();
     await this.fetchGameData();
     this.startRealtimeListeners();
     await this.checkIfMyTurn();
     this.loaded = true;
-
-    if (this.supabaseService.user) {
-      this.selectedPlayer = this.supabaseService.user.id;
-      this.playerIds.push(this.supabaseService.user.id);
-    }
   }
 
   public async shareRoom() {
