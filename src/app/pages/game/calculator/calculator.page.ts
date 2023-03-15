@@ -317,6 +317,7 @@ export class CalculatorPage implements OnInit, OnDestroy {
     });
 
     console.log(starterPlayer);
+    console.log(this.playerIds);
 
     if (this.latestScore) {
       this.currentPlayer = this.playerIds.find(
@@ -386,15 +387,19 @@ export class CalculatorPage implements OnInit, OnDestroy {
         this.selectedPlayer = winner!;
         this.currentPlayer = winner!;
 
-        console.log(winner);
+        console.log("WINNER", winner);
+        console.log("ID", this.supabaseService.user?.id);
+        console.log("GELP", this.supabaseService.user?.id === winner);
 
         if (winner === this.supabaseService.user?.id) {
-          const { data: starter } = await this.supabaseService.supabase
+          const { data: starter, error } = await this.supabaseService.supabase
             .from('game_starters')
             .insert({
               id: this.route.snapshot.paramMap.get('id'),
               profile_id: this.supabaseService.user?.id,
             });
+
+          console.log(error);
 
           this.closed = false;
         }
