@@ -330,8 +330,9 @@ export class CalculatorPage implements OnInit, OnDestroy {
       )!;
       this.selectedPlayer = this.currentPlayer;
     } else if (starterPlayer.length > 0 && this.playerIds.length > 1) {
-      this.currentPlayer = starterPlayer[0].id;
+      this.currentPlayer = starterPlayer[0].profile_id;
       this.selectedPlayer = this.currentPlayer;
+    
     } else if(this.playerIds.length > 1) {
       this.flipCoin();
     }
